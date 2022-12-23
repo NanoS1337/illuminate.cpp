@@ -1,6 +1,7 @@
 #include "illuminate.h"
 #include <iostream>
 #include <fstream>
+#include <cmath>
 
 Canvas::Canvas(uint16_t width, uint16_t height)
 {
@@ -29,13 +30,34 @@ void save_as_image(Canvas *canvas, std::string file_name)
   }
 }
 
-void illuminate_fill(Canvas *canvas, uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color color)
+void illuminate_fill_rect(Canvas *canvas, uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color color)
 {
   for(uint16_t i = x; i<x+width; ++i)
   {
     for(uint16_t j = y; j<y+height; ++j)
     {
-      canvas->pixel_data[j*canvas->width+i] = color;
+			color_pixel(canvas, i, j, color);
     }
   }
+}
+
+void illuminate_fill_circle(Canvas *canvas, uint16_t x, uint16_t y, uint16_t size, Color color)
+{
+	for(uint16_t i = x; i<x+size; ++i)
+	{
+		for(uint16_t j = y; j<y+size; ++j)
+		{
+			float distance = sqrt(pow(i - (x + size / 2), 2) + pow(j - (y + size / 2), 2));
+
+			if (distance <= size / 2)
+			{
+				color_pixel(canvas, i, j, color);
+			}
+		}
+	}
+}
+
+void color_pixel(Canvas *canvas, uint16_t x, uint16_t y, Color color)
+{
+	canvas->pixel_data[y*canvas->width+x] = color;
 }

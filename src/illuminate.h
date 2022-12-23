@@ -21,4 +21,8 @@ class Canvas {
 
 void save_as_image(Canvas *canvas, std::string file_name);
 
-void illuminate_fill(Canvas *canvas, uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color color);
+void illuminate_fill_rect(Canvas *canvas, uint16_t x, uint16_t y, uint16_t width, uint16_t height, Color color);
+
+void illuminate_fill_circle(Canvas *canvas, uint16_t x, uint16_t y, uint16_t size, Color color);
+
+void color_pixel(Canvas *canvas, uint16_t x, uint16_t y, Color color);
